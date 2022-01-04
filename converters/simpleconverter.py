@@ -17,7 +17,7 @@ noteMap = {
 	'9' : 'd5',
 }
 
-XXXcMajorScale = [
+cMajorScale = [
 	NoteGroup(noteutil.noteListFromSpnNoteNames('c4')),
 	NoteGroup(noteutil.noteListFromSpnNoteNames('d4')),
 	NoteGroup(noteutil.noteListFromSpnNoteNames('e4')),
@@ -27,7 +27,7 @@ XXXcMajorScale = [
 	NoteGroup(noteutil.noteListFromSpnNoteNames('b4')),
 ]
 
-XXXcMajorScale = [
+cMajorChord = [
 	NoteGroup(noteutil.noteListFromSpnNoteNames('c4, e4, g4')),
 	NoteGroup(noteutil.noteListFromSpnNoteNames('d4, f4, a4')),
 	NoteGroup(noteutil.noteListFromSpnNoteNames('e4, g4, b4')),
@@ -37,7 +37,7 @@ XXXcMajorScale = [
 	NoteGroup(noteutil.noteListFromSpnNoteNames('b4, d5, f5')),
 ]
 
-cMajorScale = [
+cMajor7Chord = [
 	NoteGroup(noteutil.noteListFromSpnNoteNames('c4, e4, g4, b5')),
 	NoteGroup(noteutil.noteListFromSpnNoteNames('d4, f4, a4, c5')),
 	NoteGroup(noteutil.noteListFromSpnNoteNames('e4, g4, b4, d5')),
@@ -47,24 +47,43 @@ cMajorScale = [
 	NoteGroup(noteutil.noteListFromSpnNoteNames('b4, d5, f5, a5')),
 ]
 
+nameScaleMap = {
+	'cmaj' : cMajorScale,
+	'cmajor' : cMajorScale,
+	'cmaj-chord' : cMajorChord,
+	'cmajor-chord' : cMajorChord,
+	'cmaj7-chord' : cMajor7Chord,
+	'cmajor7-chord' : cMajor7Chord,
+}
+
 noteLetters = '123456789'
 
 class SimpleConverter(converter.Converter) :
 	@classmethod
-	def getName(cls) :
-		return 'simple'
+	def getNameList(cls) :
+		return nameScaleMap.keys()
 
 	def __init__(self) :
 		super().__init__()
 
 	def doConvert(self, result) :
 		text = self.getText()
+		scale = nameScaleMap[self.getName()]
 		for char in text :
 			index = noteLetters.find(char)
 			if index >= 0 :
-				octave, remainder = divmod(index, len(cMajorScale))
-				noteGroup = cMajorScale[remainder].clone()
+				octave, remainder = divmod(index, len(scale))
+				noteGroup = scale[remainder].clone()
 				noteGroup.increaseOctave(octave)
 				noteGroup.setVolume(constants.fullVolume / 2)
 				noteGroup.getNoteList()[-1].setVolume(constants.fullVolume)
 				result.addNoteGroup(noteGroup)
+			elif char == '0' :
+				noteGroupList = result.getNoteGroupList()
+				if len(noteGroupList) > 0 :
+					noteList = noteGroupList[-1].getNoteList()
+					for note in noteList :
+						duration = note.getDuration()
+						duration *= 2
+						if duration <= constants.durationWhole :
+							note.setDuration(duration)

@@ -18,3 +18,4 @@ class NoteGroup :
 	def setVolume(self, volume) :
 		for note in self._noteList :
 			note.setVolume(volume)
+

@@ -1,11 +1,13 @@
 import app.converter as converter
 import app.outputer as outputer
+import common.util as util
 
 import sys
 import os
 import importlib
 import inspect
 import argparse
+import traceback
 
 def importModules(path) :
 	moduleList = []
@@ -24,35 +26,67 @@ def importModules(path) :
 class Application :
 	def __init__(self) :
 		self._converterMap = {}
+		self._converterList = []
 		self._outputerMap = {}
-		self._converterName = 'simple'
-		self._outputerName = 'midi'
+		self._outputerList = []
+		self._converter = None
+		self._outputer = None
 
 	def run(self) :
+		try :
+			self._doRun()
+		except Exception as e:
+			print(str(e))
+			traceback.print_exc()
+
+	def _doRun(self) :
 		self._loadModules()
-		runIt = self._parseCommandLine(sys.argv[1:])
-		converter = self._converterMap[self._converterName]()
-		outputer = self._outputerMap[self._outputerName]()
-		text = '3.14159 26535 89793 23846 26433 83279 50288 41971 69399 37510 58209 74944 '
-		#text = '3.14159 26535 '
-		convertedResult = converter.convert(text)
-		outputer.output(convertedResult)
+		self._parseCommandLine(sys.argv[1:])
+		convertedResult = self._converter.convert()
+		self._outputer.output(convertedResult)
 
 	def _loadModules(self) :
-		self._converterMap = self._loadModuleMap('converters', converter.Converter)
-		self._outputerMap = self._loadModuleMap('outputers', outputer.Outputer)
+		self._converterMap, self._converterList = self._loadModuleMap('converters', converter.Converter)
+		self._outputerMap, self._outputerList = self._loadModuleMap('outputers', outputer.Outputer)
 
 	def _loadModuleMap(self, path, baseClass) :
 		moduleMap = {}
-		moduleList = importModules(path)
-		for module in moduleList :
-			for _, obj in inspect.getmembers(module, inspect.isclass) :
-				if issubclass(obj, baseClass) :
-					moduleMap[obj.getName()] = obj
-					break
-		return moduleMap
+		moduleList = []
+		importedList = importModules(path)
+		for module in importedList :
+			for _, cls in inspect.getmembers(module, inspect.isclass) :
+				if issubclass(cls, baseClass) :
+					nameList = cls.getNameList()
+					if util.isString(nameList) :
+						nameList = [ nameList ]
+					for name in nameList :
+						moduleMap[name] = cls
+					moduleList.append(cls)
+		return moduleMap, moduleList
 
 	def _parseCommandLine(self, commandLineArguments) :
 		parser = argparse.ArgumentParser(add_help = False)
 		parser.add_argument('--help', action = 'store_true')
 		parser.add_argument('-h', action = 'store_true', dest = 'help')
+		parser.add_argument('--converter', type = str, help = "Converter name", required = False, default = 'cmajor')
+		parser.add_argument('--outputer', type = str, help = "Outputer name", required = False, default = 'midi')
+		for convert in self._converterList :
+			convert.setupArgumentParser(parser)
+		for outputer in self._outputerList :
+			outputer.setupArgumentParser(parser)
+		options, _ = parser.parse_known_args(commandLineArguments)
+		options = vars(options)
+		#print(options)
+		convertName = options['converter']
+		if convertName not in self._converterMap :
+			raise Exception('Unknown converter %s' % (convertName))
+		self._converter = self._converterMap[convertName]()
+		self._converter.setName(convertName)
+		outputerName = options['outputer']
+		if outputerName not in self._outputerMap :
+			raise Exception('Unknown converter %s' % (outputerName))
+		self._outputer = self._outputerMap[outputerName]()
+		self._outputer.setName(outputerName)
+		self._converter.parsedArguments(options)
+		self._outputer.parsedArguments(options)
+
