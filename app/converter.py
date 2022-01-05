@@ -17,10 +17,17 @@ class Converter(action.Action) :
 			help = '',
 			required = False
 		)
+		parser.add_argument(
+			'--note-count',
+			type = int,
+			help = '',
+			required = False
+		)
 
 	def __init__(self) :
 		super().__init__()
 		self._text = None
+		self._noteCount = 0
 
 	def parsedArguments(self, argumentMap) :
 		self.doParsedArguments(argumentMap)
@@ -32,6 +39,9 @@ class Converter(action.Action) :
 			self._text = util.readTextFile(textFile)
 		if self._text is None :
 			raise Exception("Either --text or --text-file should be specified.")
+		noteCount = util.getDictValue(argumentMap, 'note_count')
+		if noteCount is not None :
+			self._noteCount = noteCount
 
 	def convert(self) :
 		result = convertedresult.ConvertedResult()
@@ -40,6 +50,9 @@ class Converter(action.Action) :
 
 	def getText(self) :
 		return self._text
+
+	def getNoteCount(self) :
+		return self._noteCount
 
 	def doConvert(self) :
 		raise NotImplementedError
