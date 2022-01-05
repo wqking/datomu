@@ -8,7 +8,7 @@ class MidiOutputer(outputer.Outputer) :
 	commandArguments = {
 		'arguments' : [
 			{
-				'name' : '--file',
+				'name' : '--output-file',
 				'type' : str,
 				'help' : 'The file name to save to.'
 			},
@@ -32,7 +32,7 @@ class MidiOutputer(outputer.Outputer) :
 		self._instrument = 1
 
 	def doParsedArguments(self, argumentMap) :
-		file = util.getDictValue(argumentMap, 'file')
+		file = util.getDictValue(argumentMap, 'output_file')
 		if file is not None :
 			self._file = file 
 		instrument = util.getDictValue(argumentMap, 'instrument')

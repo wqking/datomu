@@ -21,14 +21,14 @@ class UnicodeConverter(converter.Converter) :
 	def __init__(self) :
 		super().__init__()
 		self._scale = None
-		self._durationExtendLetters = ' ,.，。'
+		self._durationExtendLetters = ' ,.!?;:'
 		self._ignoredLetters = '\r\n'
 
 	def doConvert(self, result) :
 		self._scale = scales.scalesToNoteGroupList(nameScaleMap[self.getName()])
 		converterutil.convertSingleLettersToScale(
 			result = result,
-			text = self.getText(),
+			text = self.getData(),
 			scale = self._scale,
 			config = {
 				'noteLetters' : self._findCharIndex,

@@ -22,7 +22,7 @@ class DigitConverter(converter.Converter) :
 	def doConvert(self, result) :
 		converterutil.convertSingleLettersToScale(
 			result = result,
-			text = self.getText(),
+			text = self.getData(),
 			scale = nameScaleMap[self.getName()],
 			config = {
 				'noteLetters' : '123456789',

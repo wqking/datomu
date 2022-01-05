@@ -24,11 +24,11 @@ class LetterConverter(converter.Converter) :
 	def doConvert(self, result) :
 		converterutil.convertSingleLettersToScale(
 			result = result,
-			text = self.getText(),
+			text = self.getData(),
 			scale = nameScaleMap[self.getName()],
 			config = {
 				'noteLetters' : 'abcdefghijklmnopqrstuvwxyz',
-				'durationExtendLetters' : ' .',
+				'durationExtendLetters' : ' ,.!?;:',
 				'noteCount' : self.getNoteCount(),
 				'octaveChange' : -1,
 			}

@@ -13,7 +13,7 @@ def importModules(path) :
 	moduleList = []
 	fileList = os.listdir(path)
 	for file in fileList :
-		fullFileName = path + os.sep + file
+		fullFileName = os.path.join(path, file)
 		if os.path.isfile(fullFileName) and file.endswith('.py') :
 			packageName = fullFileName
 			packageName = packageName[0 : -3]

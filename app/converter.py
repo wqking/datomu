@@ -6,12 +6,12 @@ class Converter(action.Action) :
 	@classmethod
 	def doSetupArgumentParser(cls, parser) :
 		parser.add_argument(
-			'--text',
+			'--data',
 			type = str,
 			help = ''
 		)
 		parser.add_argument(
-			'--text-file',
+			'--data-file',
 			type = str,
 			help = ''
 		)
@@ -23,19 +23,19 @@ class Converter(action.Action) :
 
 	def __init__(self) :
 		super().__init__()
-		self._text = None
+		self._data = None
 		self._noteCount = 0
 
 	def parsedArguments(self, argumentMap) :
 		self.doParsedArguments(argumentMap)
-		text = util.getDictValue(argumentMap, 'text')
-		if text is not None :
-			self._text = text
-		textFile = util.getDictValue(argumentMap, 'text_file')
-		if textFile is not None :
-			self._text = util.readTextFile(textFile)
-		if self._text is None :
-			raise Exception("Either --text or --text-file should be specified.")
+		data = util.getDictValue(argumentMap, 'data')
+		if data is not None :
+			self._data = data
+		dataFile = util.getDictValue(argumentMap, 'data_file')
+		if dataFile is not None :
+			self._data = util.readTextFile(dataFile)
+		if self._data is None :
+			raise Exception("Either --data or --data-file should be specified.")
 		noteCount = util.getDictValue(argumentMap, 'note_count')
 		if noteCount is not None :
 			self._noteCount = noteCount
@@ -45,8 +45,8 @@ class Converter(action.Action) :
 		self.doConvert(result)
 		return result
 
-	def getText(self) :
-		return self._text
+	def getData(self) :
+		return self._data
 
 	def getNoteCount(self) :
 		return self._noteCount
