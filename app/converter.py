@@ -8,20 +8,17 @@ class Converter(action.Action) :
 		parser.add_argument(
 			'--text',
 			type = str,
-			help = '',
-			required = False
+			help = ''
 		)
 		parser.add_argument(
 			'--text-file',
 			type = str,
-			help = '',
-			required = False
+			help = ''
 		)
 		parser.add_argument(
 			'--note-count',
 			type = int,
-			help = '',
-			required = False
+			help = ''
 		)
 
 	def __init__(self) :

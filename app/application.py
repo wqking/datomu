@@ -66,14 +66,15 @@ class Application :
 
 	def _parseCommandLine(self, commandLineArguments) :
 		parser = argparse.ArgumentParser(add_help = False)
+		parserWrapper = ArgParserWrapper(parser)
 		parser.add_argument('--help', action = 'store_true')
 		parser.add_argument('-h', action = 'store_true', dest = 'help')
-		parser.add_argument('--converter', type = str, help = "Converter name", required = False, default = 'cmajor')
-		parser.add_argument('--outputer', type = str, help = "Outputer name", required = False, default = 'midi')
+		parserWrapper.add_argument('--converter', type = str, help = "Converter name", default = 'cmajor')
+		parserWrapper.add_argument('--outputer', type = str, help = "Outputer name", default = 'midi')
 		for convert in self._converterList :
-			convert.setupArgumentParser(parser)
+			convert.setupArgumentParser(parserWrapper)
 		for outputer in self._outputerList :
-			outputer.setupArgumentParser(parser)
+			outputer.setupArgumentParser(parserWrapper)
 		options, _ = parser.parse_known_args(commandLineArguments)
 		options = vars(options)
 		#print(options)
@@ -90,3 +91,19 @@ class Application :
 		self._converter.parsedArguments(options)
 		self._outputer.parsedArguments(options)
 
+class ArgParserWrapper :
+	def __init__(self, argParser) :
+		self._argParser = argParser
+		self._argumentMap = {}
+	
+	def add_argument(self, name, default = None, type = str, help = '', dest = None) :
+		if name in self._argumentMap :
+			return
+		self._argumentMap[name] = True
+		self._argParser.add_argument(
+			name,
+			default = default,
+			type = type,
+			help = help,
+			dest = dest
+		)

@@ -7,8 +7,7 @@ class Outputer(action.Action) :
 		parser.add_argument(
 			'--tempo',
 			type = int,
-			help = '',
-			required = False
+			help = ''
 		)
 
 	def __init__(self) :

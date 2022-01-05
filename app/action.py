@@ -23,7 +23,6 @@ class Action :
 				argument['name'],
 				type = argument['type'],
 				help = argument['help'],
-				required = util.getDictValue(argument, 'required'),
 				default = util.getDictValue(argument, 'default')
 			)
 

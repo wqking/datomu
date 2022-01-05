@@ -10,7 +10,6 @@ class MidiOutputer(outputer.Outputer) :
 			{
 				'name' : '--file',
 				'type' : str,
-				'required' : False,
 				'help' : 'The file name to save to.'
 			},
 
@@ -18,7 +17,6 @@ class MidiOutputer(outputer.Outputer) :
 			{
 				'name' : '--instrument',
 				'type' : int,
-				'required' : False,
 				'help' : 'The instrument number of 1 to 128. '
 			},
 		]
