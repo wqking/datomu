@@ -69,7 +69,7 @@ class Application :
 		parserWrapper = ArgParserWrapper(parser)
 		parser.add_argument('--help', action = 'store_true')
 		parser.add_argument('-h', action = 'store_true', dest = 'help')
-		parserWrapper.add_argument('--converter', type = str, help = "Converter name", default = 'cmajor')
+		parserWrapper.add_argument('--converter', type = str, help = "Converter name", default = 'digit')
 		parserWrapper.add_argument('--outputer', type = str, help = "Outputer name", default = 'midi')
 		for convert in self._converterList :
 			convert.setupArgumentParser(parserWrapper)

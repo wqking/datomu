@@ -13,6 +13,7 @@ cMajorScale = [
 ]
 
 # https://www.piano-keyboard-guide.com/key-of-c.html
+# C, Dm, Em, F, G, Am, Bdim
 cMajorChord = [
 	'c4, e4, g4',
 	'd4, f4, a4',
@@ -24,6 +25,7 @@ cMajorChord = [
 ]
 
 # https://www.piano-keyboard-guide.com/key-of-c.html
+# Cmaj7, Dm7, Em7, F7, G7, Am7, Bdim7
 cMajor7Chord = [
 	'c3, e3, g3, b4',
 	'd3, f3, a3, c4',
@@ -45,6 +47,7 @@ cMinorScale = [
 ]
 
 # http://www.piano-keyboard-guide.com/key-of-c-minor.html
+# Cm, Ddim, Eb, Fm, Gm, Ab, Bb
 cMinorChord = [
 	'c4, eb4, g4',
 	'd4, f4, ab4',
@@ -56,6 +59,7 @@ cMinorChord = [
 ]
 
 # http://www.piano-keyboard-guide.com/key-of-c-minor.html
+# Cm7, Ddim7, Eb7, Fm7, Gm7, Ab7, Bb7
 cMinor7Chord = [
 	'c3, eb3, g3, bb4',
 	'd3, f3, ab3, c4',
@@ -66,11 +70,35 @@ cMinor7Chord = [
 	'bb3, d4, f4, ab4',
 ]
 
-def scalesToNoteGroupList(scaleList) :
-	noteGroupList = []
-	for scale in scaleList :
-		noteGroup = scale
-		if util.isString(noteGroup) :
-			noteGroup = NoteGroup(noteutil.noteListFromSpnNoteNames(noteGroup))
-		noteGroupList.append(noteGroup)
-	return noteGroupList
+# Chinese Pentatonic scale
+pentatonic = [
+	'c4',
+	'd4',
+	'e4',
+	'g4',
+	'a4',
+]
+
+# https://www.musicnotes.com/now/omg/japanese-scales-in-music-theory/
+# Japanese Hirajōshi Scale
+japanHira = [
+	'c4',
+	'd4',
+	'eb4',
+	'g4',
+	'ab4',
+]
+
+scaleNameMap = {
+	'cmaj' : cMajorScale,
+	'cmaj-chord' : cMajorChord,
+	'cmaj7-chord' : cMajor7Chord,
+	'cmin' : cMinorScale,
+	'cmin-chord' : cMinorChord,
+	'cmin7-chord' : cMinor7Chord,
+
+	'cn-penta' : pentatonic,
+
+	'jp-hira' : japanHira,
+}
+

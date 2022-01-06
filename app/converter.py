@@ -1,5 +1,6 @@
 import app.action as action
 import app.convertedresult as convertedresult
+import converters.scales as scales
 import common.util as util
 
 class Converter(action.Action) :
@@ -20,11 +21,17 @@ class Converter(action.Action) :
 			type = int,
 			help = ''
 		)
+		parser.add_argument(
+			'--scale',
+			type = str,
+			help = ''
+		)
 
 	def __init__(self) :
 		super().__init__()
 		self._data = None
 		self._noteCount = 0
+		self._scaleName = "cmaj"
 
 	def parsedArguments(self, argumentMap) :
 		self.doParsedArguments(argumentMap)
@@ -39,6 +46,9 @@ class Converter(action.Action) :
 		noteCount = util.getDictValue(argumentMap, 'note_count')
 		if noteCount is not None :
 			self._noteCount = noteCount
+		scaleName = util.getDictValue(argumentMap, 'scale')
+		if scaleName is not None :
+			self._scaleName = scaleName
 
 	def convert(self) :
 		result = convertedresult.ConvertedResult()
@@ -50,6 +60,14 @@ class Converter(action.Action) :
 
 	def getNoteCount(self) :
 		return self._noteCount
+
+	def getScaleName(self) :
+		return self._scaleName
+
+	def getScale(self) :
+		if self._scaleName not in scales.scaleNameMap :
+			raise Exception("Unknown scale name %s" % (self._scaleName))
+		return scales.scaleNameMap[self._scaleName]
 
 	def doConvert(self) :
 		raise NotImplementedError

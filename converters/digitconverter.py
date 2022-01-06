@@ -1,20 +1,10 @@
 import app.converter as converter
-import music.scales as scales
 import converters.converterutil as converterutil
-
-nameScaleMap = {
-	'digit-cmaj' : scales.cMajorScale,
-	'digit-cmaj-chord' : scales.cMajorChord,
-	'digit-cmaj7-chord' : scales.cMajor7Chord,
-	'digit-cmin' : scales.cMinorScale,
-	'digit-cmin-chord' : scales.cMinorChord,
-	'digit-cmin7-chord' : scales.cMinor7Chord,
-}
 
 class DigitConverter(converter.Converter) :
 	@classmethod
 	def getNameList(cls) :
-		return nameScaleMap.keys()
+		return 'digit'
 
 	def __init__(self) :
 		super().__init__()
@@ -23,7 +13,7 @@ class DigitConverter(converter.Converter) :
 		converterutil.convertSingleLettersToScale(
 			result = result,
 			text = self.getData(),
-			scale = nameScaleMap[self.getName()],
+			scale = self.getScale(),
 			config = {
 				'noteLetters' : '123456789',
 				'durationExtendLetters' : '0',

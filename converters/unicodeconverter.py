@@ -1,22 +1,10 @@
 import app.converter as converter
-import music.scales as scales
 import converters.converterutil as converterutil
-
-import re
-
-nameScaleMap = {
-	'unicode-cmaj' : scales.cMajorScale,
-	'unicode-cmaj-chord' : scales.cMajorChord,
-	'unicode-cmaj7-chord' : scales.cMajor7Chord,
-	'unicode-cmin' : scales.cMinorScale,
-	'unicode-cmin-chord' : scales.cMinorChord,
-	'unicode-cmin7-chord' : scales.cMinor7Chord,
-}
 
 class UnicodeConverter(converter.Converter) :
 	@classmethod
 	def getNameList(cls) :
-		return nameScaleMap.keys()
+		return 'unicode'
 
 	def __init__(self) :
 		super().__init__()
@@ -25,7 +13,7 @@ class UnicodeConverter(converter.Converter) :
 		self._ignoredLetters = '\r\n'
 
 	def doConvert(self, result) :
-		self._scale = scales.scalesToNoteGroupList(nameScaleMap[self.getName()])
+		self._scale = converterutil.scalesToNoteGroupList(self.getScale())
 		converterutil.convertSingleLettersToScale(
 			result = result,
 			text = self.getData(),

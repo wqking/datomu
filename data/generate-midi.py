@@ -5,6 +5,7 @@ sys.path.insert(0,'.')
 import converters.digitconverter as digitconverter
 import converters.letterconverter as letterconverter
 import converters.unicodeconverter as unicodeconverter
+import converters.scales as scales
 import common.util as util
 
 import os
@@ -72,17 +73,19 @@ class Application :
 		return files
 
 	def _convertDataFile(self, dataFile) :
-		converterList = self._detectDataFileConverters(dataFile)
-		if converterList is None :
+		converter = self._detectDataFileConverter(dataFile)
+		if converter is None :
 			print("Can't detect converter for %s" % (dataFile))
 			return
-		for converter in converterList :
-			self._convertDataFileWithConverter(dataFile, converter)
+		scaleNameList = scales.scaleNameMap.keys()
+		for scaleName in scaleNameList :
+			self._convertDataFileWithConverter(dataFile, converter, scaleName)
 
-	def _convertDataFileWithConverter(self, dataFile, converter) :
-		outputFileName = self._makeOutputFileName(dataFile, converter)
+	def _convertDataFileWithConverter(self, dataFile, converter, scaleName) :
+		outputFileName = self._makeOutputFileName(dataFile, converter, scaleName)
 		command = 'python datomu.py'
 		command += ' --converter %s' % (converter)
+		command += ' --scale %s' % (scaleName)
 		command += ' --outputer midi'
 		command += ' --data-file "%s"' % (os.path.abspath(dataFile))
 		command += ' --output-file "%s"' % (outputFileName)
@@ -96,10 +99,11 @@ class Application :
 		print(fullCommand)
 		os.system(fullCommand)
 
-	def _makeOutputFileName(self, dataFile, converter) :
+	def _makeOutputFileName(self, dataFile, converter, scaleName) :
 		fileName = os.path.basename(dataFile)
 		fileName = util.replaceFileExtension(fileName, '')
 		fileName += '-' + converter
+		fileName += '-' + scaleName
 		if self._tempo is not None :
 			fileName += '-%sbpm' % (str(self._tempo))
 		if self._instrument is not None :
@@ -110,7 +114,7 @@ class Application :
 		fileName = os.path.join(self._outputPath, fileName)
 		return fileName
 
-	def _detectDataFileConverters(self, dataFile) :
+	def _detectDataFileConverter(self, dataFile) :
 		content = util.readTextFile(dataFile)
 		digitCount = 0
 		letterCount = 0
@@ -123,11 +127,11 @@ class Application :
 			elif ord(char) > 127 :
 				unicodeCount += 1
 		if digitCount >= letterCount and digitCount >= unicodeCount :
-			return digitconverter.nameScaleMap.keys()
+			return digitconverter.DigitConverter.getNameList()
 		if letterCount >= digitCount and letterCount >= unicodeCount :
-			return letterconverter.nameScaleMap.keys()
+			return letterconverter.LetterConverter.getNameList()
 		if unicodeCount >= digitCount and unicodeCount >= letterCount :
-			return unicodeconverter.nameScaleMap.keys()
+			return unicodeconverter.UnicodeConverter.getNameList()
 		return None
 
 

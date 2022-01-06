@@ -1,22 +1,12 @@
 import app.converter as converter
-import music.scales as scales
 import converters.converterutil as converterutil
 
 import re
 
-nameScaleMap = {
-	'letter-cmaj' : scales.cMajorScale,
-	'letter-cmaj-chord' : scales.cMajorChord,
-	'letter-cmaj7-chord' : scales.cMajor7Chord,
-	'letter-cmin' : scales.cMinorScale,
-	'letter-cmin-chord' : scales.cMinorChord,
-	'letter-cmin7-chord' : scales.cMinor7Chord,
-}
-
 class LetterConverter(converter.Converter) :
 	@classmethod
 	def getNameList(cls) :
-		return nameScaleMap.keys()
+		return 'letter'
 
 	def __init__(self) :
 		super().__init__()
@@ -25,7 +15,7 @@ class LetterConverter(converter.Converter) :
 		converterutil.convertSingleLettersToScale(
 			result = result,
 			text = self.getData(),
-			scale = nameScaleMap[self.getName()],
+			scale = self.getScale(),
 			config = {
 				'noteLetters' : 'abcdefghijklmnopqrstuvwxyz',
 				'durationExtendLetters' : ' ,.!?;:',

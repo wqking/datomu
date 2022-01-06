@@ -1,7 +1,7 @@
-import music.scales as scales
 import music.constants as constants
 from music.note import Note
 from music.notegroup import NoteGroup
+import music.noteutil as noteutil
 import common.util as util
 
 def findLetterIndex(char, letterList) :
@@ -9,8 +9,17 @@ def findLetterIndex(char, letterList) :
 		return letterList(char)
 	return letterList.find(char)
 
+def scalesToNoteGroupList(scaleList) :
+	noteGroupList = []
+	for scale in scaleList :
+		noteGroup = scale
+		if util.isString(noteGroup) :
+			noteGroup = NoteGroup(noteutil.noteListFromSpnNoteNames(noteGroup))
+		noteGroupList.append(noteGroup)
+	return noteGroupList
+
 def convertSingleLettersToScale(result, text, scale, config) :
-	scale = scales.scalesToNoteGroupList(scale)
+	scale = scalesToNoteGroupList(scale)
 	noteLetters = config['noteLetters']
 	durationExtendLetters = util.getDictValue(config, 'durationExtendLetters', '')
 	restLetters = util.getDictValue(config, 'restLetters', '')
