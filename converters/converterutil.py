@@ -22,7 +22,7 @@ def convertSingleLettersToScale(result, text, scale, config) :
 			octave, remainder = divmod(index, len(scale))
 			noteGroup = scale[remainder].clone()
 			noteGroup.increaseOctave(octave)
-			noteGroup.setVolume(constants.fullVolume / 2)
+			noteGroup.setVolume(constants.fullVolume * 4 / 5)
 			noteGroup.getNoteList()[-1].setVolume(constants.fullVolume)
 			if octaveChange != 0 :
 				noteGroup.increaseOctave(octaveChange)

@@ -11,12 +11,20 @@ import os
 import glob
 import argparse
 
+def getOptionValue(options, key, default) :
+	if key not in options :
+		return default
+	if options[key] is None :
+		return default
+	return options[key]
+
 class Application :
 	def __init__(self) :
 		self._dataPath = './'
-		self._outputPath = '/temp/test'
+		self._outputPath = './'
 		self._tempo = None
 		self._instrument = None
+		self._noteCount = None
 
 	def run(self) :
 		self._parseCommandLine(sys.argv[1:])
@@ -26,6 +34,38 @@ class Application :
 
 	def _parseCommandLine(self, commandLineArguments) :
 		parser = argparse.ArgumentParser(add_help = False)
+		parser.add_argument(
+			'--data-path',
+			type = str,
+			help = ''
+		)
+		parser.add_argument(
+			'--output-path',
+			type = str,
+			help = ''
+		)
+		parser.add_argument(
+			'--note-count',
+			type = int,
+			help = ''
+		)
+		parser.add_argument(
+			'--instrument',
+			type = int,
+			help = ''
+		)
+		parser.add_argument(
+			'--tempo',
+			type = int,
+			help = ''
+		)
+		options = parser.parse_args(commandLineArguments)
+		options = vars(options)
+		self._dataPath = getOptionValue(options, 'data_path', self._dataPath)
+		self._outputPath = getOptionValue(options, 'output_path', self._outputPath)
+		self._tempo = getOptionValue(options, 'tempo', self._tempo)
+		self._instrument = getOptionValue(options, 'instrument', self._instrument)
+		self._noteCount = getOptionValue(options, 'note_count', self._noteCount)
 
 	def _loadDataFiles(self) :
 		files = glob.glob(os.path.join(self._dataPath, '*.txt'))
@@ -46,6 +86,12 @@ class Application :
 		command += ' --outputer midi'
 		command += ' --data-file "%s"' % (os.path.abspath(dataFile))
 		command += ' --output-file "%s"' % (outputFileName)
+		if self._tempo is not None :
+			command += ' --tempo %s' % (str(self._tempo))
+		if self._instrument is not None :
+			command += ' --instrument %s' % (str(self._instrument))
+		if self._noteCount is not None :
+			command += ' --note-count %s' % (str(self._noteCount))
 		fullCommand = 'cd .. && %s' % (command)
 		print(fullCommand)
 		os.system(fullCommand)
@@ -58,6 +104,8 @@ class Application :
 			fileName += '-%sbpm' % (str(self._tempo))
 		if self._instrument is not None :
 			fileName += '-instrument%s' % (str(self._instrument))
+		if self._noteCount is not None :
+			fileName += '-%snotes' % (str(self._noteCount))
 		fileName += '.mid'
 		fileName = os.path.join(self._outputPath, fileName)
 		return fileName

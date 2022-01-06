@@ -45,7 +45,6 @@ class UnicodeConverter(converter.Converter) :
 			return -1
 		index = ord(char)
 		noteGroupCount = len(self._scale)
-		maxOctave = 4
-		if index > maxOctave * noteGroupCount :
-			index = maxOctave * noteGroupCount + index % noteGroupCount
+		maxOctave = 3
+		index = index % (maxOctave * noteGroupCount)
 		return index
