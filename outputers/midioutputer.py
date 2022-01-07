@@ -65,6 +65,7 @@ class MidiOutputer(outputer.Outputer) :
 			for track in range(len(noteList)) :
 				note = noteList[track]
 				pitch = note.getSemitones()
+				pitch += 12 # note is 12 semitons smaller than MIDI pitch
 				duration = int((note.getDuration() * ticksPerQuarternote) // constants.duration4th)
 				volume = int((note.getVolume() * 127) // constants.fullVolume)
 				if note.isRest() :

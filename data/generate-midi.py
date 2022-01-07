@@ -89,6 +89,12 @@ class Application :
 		command += ' --outputer midi'
 		command += ' --data-file "%s"' % (os.path.abspath(dataFile))
 		command += ' --output-file "%s"' % (outputFileName)
+		octaveChange = 0
+		if converter == letterconverter.LetterConverter.getNameList() or converter == unicodeconverter.UnicodeConverter.getNameList() :
+			if len(scales.scaleNameMap[scaleName][0]) >= 3 :
+				octaveChange = -1
+		if octaveChange != 0 :
+			command += ' --octave-change %s' % (str(octaveChange))
 		if self._tempo is not None :
 			command += ' --tempo %s' % (str(self._tempo))
 		if self._instrument is not None :

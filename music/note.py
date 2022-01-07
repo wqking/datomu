@@ -40,6 +40,8 @@ class Note :
 
 	def setOctave(self, octave) :
 		self._octave = octave
+		if self._octave < 0 :
+			self._octave = 0
 
 	def increaseOctave(self, delta = 1) :
 		self.setOctave(self.getOctave() + delta)
@@ -47,6 +49,7 @@ class Note :
 	def getAccidental(self) :
 		return self._accidental
 
+	# C0 semitons is 0, C4 is 48
 	def getSemitones(self) :
 		semitones = constants.semitoneListInOneOctave[self._degree]
 		semitones += constants.accidentalSemitoneList[int(self._accidental)]

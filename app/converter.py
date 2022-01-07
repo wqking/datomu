@@ -26,12 +26,18 @@ class Converter(action.Action) :
 			type = str,
 			help = ''
 		)
+		parser.add_argument(
+			'--octave-change',
+			type = int,
+			help = ''
+		)
 
 	def __init__(self) :
 		super().__init__()
 		self._data = None
 		self._noteCount = 0
 		self._scaleName = "cmaj"
+		self._octaveChange = 0
 
 	def parsedArguments(self, argumentMap) :
 		self.doParsedArguments(argumentMap)
@@ -49,6 +55,9 @@ class Converter(action.Action) :
 		scaleName = util.getDictValue(argumentMap, 'scale')
 		if scaleName is not None :
 			self._scaleName = scaleName
+		octaveChange = util.getDictValue(argumentMap, 'octave_change')
+		if octaveChange is not None :
+			self._octaveChange = octaveChange
 
 	def convert(self) :
 		result = convertedresult.ConvertedResult()
@@ -68,6 +77,9 @@ class Converter(action.Action) :
 		if self._scaleName not in scales.scaleNameMap :
 			raise Exception("Unknown scale name %s" % (self._scaleName))
 		return scales.scaleNameMap[self._scaleName]
+
+	def getOctaveChange(self) :
+		return self._octaveChange
 
 	def doConvert(self) :
 		raise NotImplementedError

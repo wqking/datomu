@@ -1,6 +1,5 @@
-from music.notegroup import NoteGroup
+import music.note as note
 import music.noteutil as noteutil
-import common.util as util
 
 cMajorScale = [
 	'c4',
@@ -27,13 +26,13 @@ cMajorChord = [
 # https://www.piano-keyboard-guide.com/key-of-c.html
 # Cmaj7, Dm7, Em7, F7, G7, Am7, Bdim7
 cMajor7Chord = [
-	'c3, e3, g3, b4',
-	'd3, f3, a3, c4',
-	'e3, g3, b3, d4',
-	'f3, a3, c4, e4',
-	'g3, b3, d4, f4',
-	'a3, c4, e4, g4',
-	'b3, d4, f4, a4',
+	'c4, e4, g4, b4',
+	'd4, f4, a4, c5',
+	'e4, g4, b4, d5',
+	'f4, a4, c5, e5',
+	'g4, b4, d5, f5',
+	'a4, c5, e5, g5',
+	'b4, d5, f5, a5',
 ]
 
 cMinorScale = [
@@ -61,13 +60,13 @@ cMinorChord = [
 # http://www.piano-keyboard-guide.com/key-of-c-minor.html
 # Cm7, Ddim7, Eb7, Fm7, Gm7, Ab7, Bb7
 cMinor7Chord = [
-	'c3, eb3, g3, bb4',
-	'd3, f3, ab3, c4',
-	'eb3, g3, bb3, d4',
-	'f3, ab3, c4, eb4',
-	'g3, bb3, d4, f4',
-	'ab3, c4, eb4, g4',
-	'bb3, d4, f4, ab4',
+	'c4, eb4, g4, bb4',
+	'd4, f4, ab4, c5',
+	'eb4, g4, bb4, d5',
+	'f4, ab4, c5, eb5',
+	'g4, bb4, d5, f5',
+	'ab4, c5, eb5, g5',
+	'bb4, d5, f5, ab5',
 ]
 
 # Chinese Pentatonic scale
@@ -102,3 +101,18 @@ scaleNameMap = {
 	'jp-hira' : japanHira,
 }
 
+# for test
+def verifyScales() :
+	for scaleName in scaleNameMap :
+		scaleList = scaleNameMap[scaleName]
+		for scale in scaleList :
+			noteList = noteutil.noteListFromSpnNoteNames(scale)
+			for i in range(1, len(noteList)) :
+				previousSemitones = noteList[i - 1].getSemitones()
+				currentSemitones = noteList[i].getSemitones()
+				if currentSemitones <= previousSemitones :
+					raise Exception("verifyScales failed 1: %s %d" % (scaleName, i))
+				if currentSemitones - previousSemitones >= 12 :
+					raise Exception("verifyScales failed 2: %s %d" % (scaleName, i))
+
+verifyScales()

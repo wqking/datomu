@@ -1,9 +1,9 @@
-# datomu -- convert Data To Music
+# Datomu -- convert Data To Music
 
-datomu is a little tool to convert any boring data to enjoyable music. For example, we can convert the mathematics constant π (Pi, 3.14159265 ......) to music, each digit is a note or chord, or convert Percy Bysshe Shelley's poem to music, letter by letter.  
-datomu doesn't handle any musicality, it only converts the data accurately. So any musicality, if any, is produced by the data, or to say, produced by the wonderful nature.
+Datomu is a little tool to convert any boring data to enjoyable music. For example, we can convert the mathematics constant π (Pi, 3.14159265 ......) to music, each digit is a note or chord, or convert Percy Bysshe Shelley's poem to music, letter by letter.  
+Datomu doesn't handle any musicality, it only converts the data accurately. So any musicality, if any, is produced by the data, or to say, produced by the wonderful nature.
 
-Currently datomu can generate MIDI file. For example, the tool can convert 3.14159265 to C Major scale "E4 C4 F4 G4 B5 D4 A4 G4" note sequence and store to MIDI file. 
+Currently Datomu can generate MIDI file. For example, the tool can convert 3.14159265 to C Major scale "E4 C4 F4 G4 B5 D4 A4 G4" note sequence and store to MIDI file. 
 
 This tool is written in Python 3
 
@@ -35,8 +35,8 @@ There are pre-defined data in the `data` folder. You can use any data.
 **--converter**  
 Specify the converter. The default converter is 'digit'.  
 Availabe converters:  
-`digit`: convert digit 1~9 to the notes in the scale degrees. 0 doubles the duration of the previous note.  
-`letter`: convert letter a~z to the notes in the scale degrees. space, dot, comma, and '!?;:' doubles the duration of the previous note.  
+`digit`: convert digit 1-9 to the notes in the scale degrees. 0 doubles the duration of the previous note.  
+`letter`: convert letter a-z to the notes in the scale degrees. space, dot, comma, and '!?;:' doubles the duration of the previous note.  
 `unicode`: map the unicode values to the notes in the scale degrees. space, dot, comma, and '!?;:' doubles the duration of the previous note. It's useful for non-English and non-Latin languages.
 
 **--scale**  
@@ -66,7 +66,15 @@ The value is 1~128, see https://soundprogramming.net/file-formats/general-midi-i
 Specifies the tempo in BPM for quarter note. The default value is 120  
 
 **--note-count**  
-Specifies how many notes will be converted and generated. The default value is 0, that means no limits, all notes will be converted.
+Specifies how many notes will be converted and generated. The default value is 0, that means no limits, all notes will be converted. -2
+
+**--octave-change**  
+Change octave higher or lower. The value is an integer. Negative integer decreases the octave. Positive integer increases the octave.  
+The default value is 0, which doesn't change the octave.
+For example, '--octave-change -2' will decrease 2 octaves on each notes.
+
+**--octave-range**  
+Used by 'unicode' converter. Specifies the range of the octaves to convert to. The default value is 3, that means, the converted note pitches are within 3 octaves.
 
 ### Example commands
 
@@ -79,4 +87,4 @@ Warning: the code style doesn't conform PEP8 or any Python style. If you want to
 
 ## Motivations
 
-I (wqking) like programming, I like music, I like the beauty of nature. datomu puts all what I like together, nothing is more exciting.  
+I (wqking) like programming, I like music, I like the beauty of nature. Datomu puts all what I like together, nothing is more exciting.  
