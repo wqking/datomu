@@ -27,9 +27,13 @@ class Note :
 	def getVolume(self) :
 		return self._volume
 
+	# the max volume value is constants.fullVolume
 	def setVolume(self, volume) :
 		volume = int(volume)
-		assert(volume >= 0 and volume <= constants.fullVolume)
+		if volume < 0 :
+			volume = 0
+		if volume > constants.fullVolume :
+			volume = constants.fullVolume
 		self._volume = volume
 
 	def getDegree(self) :

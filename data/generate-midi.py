@@ -89,6 +89,7 @@ class Application :
 		command += ' --outputer midi'
 		command += ' --data-file "%s"' % (os.path.abspath(dataFile))
 		command += ' --output-file "%s"' % (outputFileName)
+		command += ' --volume %s' % (str(80))
 		octaveChange = 0
 		if converter == letterconverter.LetterConverter.getNameList() or converter == unicodeconverter.UnicodeConverter.getNameList() :
 			if len(scales.scaleNameMap[scaleName][0]) >= 3 :

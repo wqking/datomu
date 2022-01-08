@@ -18,6 +18,7 @@ class DigitConverter(converter.Converter) :
 				'noteLetters' : '123456789',
 				'durationExtendLetters' : '0',
 				'noteCount' : self.getNoteCount(),
+				'volume' : self.getVolume(),
 				'octaveChange' : self.getOctaveChange(),
 			}
 		)

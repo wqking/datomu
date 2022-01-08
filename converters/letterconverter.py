@@ -20,6 +20,7 @@ class LetterConverter(converter.Converter) :
 				'noteLetters' : 'abcdefghijklmnopqrstuvwxyz',
 				'durationExtendLetters' : ' ,.!?;:',
 				'noteCount' : self.getNoteCount(),
+				'volume' : self.getVolume(),
 				'octaveChange' : self.getOctaveChange(),
 			}
 		)

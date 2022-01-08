@@ -25,14 +25,14 @@ def convertSingleLettersToScale(result, text, scale, config) :
 	restLetters = util.getDictValue(config, 'restLetters', '')
 	noteCount = util.getDictValue(config, 'noteCount', 0)
 	octaveChange = util.getDictValue(config, 'octaveChange', 0)
+	volume = util.getDictValue(config, 'volume', constants.fullVolume)
 	for char in text :
 		index = findLetterIndex(char, noteLetters)
 		if index >= 0 :
 			octave, remainder = divmod(index, len(scale))
 			noteGroup = scale[remainder].clone()
 			noteGroup.increaseOctave(octave)
-			noteGroup.setVolume(constants.fullVolume * 4 / 5)
-			noteGroup.getNoteList()[-1].setVolume(constants.fullVolume)
+			noteGroup.setVolume(volume)
 			if octaveChange != 0 :
 				noteGroup.increaseOctave(octaveChange)
 			#print(noteGroup.getNoteList()[0].getSpnName(), noteGroup.getNoteList()[0].getSemitones())

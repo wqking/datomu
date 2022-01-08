@@ -31,6 +31,11 @@ class Converter(action.Action) :
 			type = int,
 			help = ''
 		)
+		parser.add_argument(
+			'--volume',
+			type = int,
+			help = ''
+		)
 
 	def __init__(self) :
 		super().__init__()
@@ -38,6 +43,7 @@ class Converter(action.Action) :
 		self._noteCount = 0
 		self._scaleName = "cmaj"
 		self._octaveChange = 0
+		self._volume = 80
 
 	def parsedArguments(self, argumentMap) :
 		self.doParsedArguments(argumentMap)
@@ -58,6 +64,11 @@ class Converter(action.Action) :
 		octaveChange = util.getDictValue(argumentMap, 'octave_change')
 		if octaveChange is not None :
 			self._octaveChange = octaveChange
+		volume = util.getDictValue(argumentMap, 'volume')
+		if volume is not None :
+			self._volume = volume
+			if self._volume < 0 or self._volume > 127 :
+				raise Exception("--volume must be between [0, 127]")
 
 	def convert(self) :
 		result = convertedresult.ConvertedResult()
@@ -80,6 +91,9 @@ class Converter(action.Action) :
 
 	def getOctaveChange(self) :
 		return self._octaveChange
+
+	def getVolume(self) :
+		return self._volume
 
 	def doConvert(self) :
 		raise NotImplementedError

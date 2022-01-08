@@ -65,6 +65,9 @@ The value is 1~128, see https://soundprogramming.net/file-formats/general-midi-i
 **--tempo**  
 Specifies the tempo in BPM for quarter note. The default value is 120  
 
+**--volume**  
+Specifies the volume in the output sound file. The default value is 80. The value is between 0 and 100. 100 is the highest volume, 0 is silent.  
+
 **--note-count**  
 Specifies how many notes will be converted and generated. The default value is 0, that means no limits, all notes will be converted. -2
 
@@ -87,4 +90,4 @@ Warning: the code style doesn't conform PEP8 or any Python style. If you want to
 
 ## Motivations
 
-I (wqking) like programming, I like music, I like the beauty of nature. Datomu puts all what I like together, nothing is more exciting.  
+I (wqking) love programming, I love music, I love the beauty of nature. Datomu puts all my love together, nothing else is more exciting.  

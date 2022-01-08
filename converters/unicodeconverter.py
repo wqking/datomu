@@ -41,6 +41,7 @@ class UnicodeConverter(converter.Converter) :
 				'noteLetters' : self._findCharIndex,
 				'durationExtendLetters' : self._durationExtendLetters,
 				'noteCount' : self.getNoteCount(),
+				'volume' : self.getVolume(),
 				'octaveChange' : self.getOctaveChange(),
 			}
 		)
