@@ -49,7 +49,7 @@ Available scales:
 `cmin-chord`: Chords in C Minor. Cm, Ddim, Eb, Fm, Gm, Ab, Bb  
 `cmin7-chord`: Chords in C Minor 7. Cm7, Ddim7, Eb7, Fm7, Gm7, Ab7, Bb7  
 `cn-penta`: Chinese pentatonic scale   
-`jp-hira`: Japanese Hirajōshi Scale  
+`jp-in`: Japanese In Scale  
 
 **--outputer**  
 Specifies the outputer, how the converted notes are outputted. The default value is 'midi'.  

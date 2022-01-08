@@ -78,12 +78,12 @@ pentatonic = [
 	'a4',
 ]
 
-# https://www.musicnotes.com/now/omg/japanese-scales-in-music-theory/
-# Japanese Hirajōshi Scale
-japanHira = [
+# https://en.wikipedia.org/wiki/In_scale
+# Japanese In Scale
+japanIn = [
 	'c4',
-	'd4',
-	'eb4',
+	'db4',
+	'f4',
 	'g4',
 	'ab4',
 ]
@@ -98,7 +98,7 @@ scaleNameMap = {
 
 	'cn-penta' : pentatonic,
 
-	'jp-hira' : japanHira,
+	'jp-in' : japanIn,
 }
 
 # for test
