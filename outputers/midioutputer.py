@@ -10,14 +10,14 @@ class MidiOutputer(outputer.Outputer) :
 			{
 				'name' : '--output-file',
 				'type' : str,
-				'help' : 'The file name to save to.'
+				'help' : "The file name to save to."
 			},
 
 			# https://soundprogramming.net/file-formats/general-midi-instrument-list/
 			{
 				'name' : '--instrument',
 				'type' : int,
-				'help' : 'The instrument number of 1 to 128. '
+				'help' : "Specifies the instrument used in the MIDI file. The default value is 1, which is Acoustic Grand Piano. The value is 1-128"
 			},
 		]
 	}

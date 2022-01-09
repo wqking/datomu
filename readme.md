@@ -26,6 +26,9 @@ Then go to the source code folder in terminal (command line console). Then run c
 
 ### The options
 
+**--help**  
+Display help message.
+
 **--data**  
 **--data-file filename**
 --data specifies the data on the command line, for example, --data 3.14159265  
@@ -60,16 +63,16 @@ Specifies the MIDI file name to write to. The default value is 'output.mid'.
 
 **--instrument**  
 Specifies the instrument used in the MIDI file. The default value is 1, which is Acoustic Grand Piano.  
-The value is 1~128, see https://soundprogramming.net/file-formats/general-midi-instrument-list/ for details.
+The value is 1-128, see https://soundprogramming.net/file-formats/general-midi-instrument-list/ for details.
 
 **--tempo**  
-Specifies the tempo in BPM for quarter note. The default value is 120  
+Specifies the tempo in BPM for quarter note. The default value is 120.  
 
 **--volume**  
 Specifies the volume in the output sound file. The default value is 80. The value is between 0 and 100. 100 is the highest volume, 0 is silent.  
 
 **--note-count**  
-Specifies how many notes will be converted and generated. The default value is 0, that means no limits, all notes will be converted. -2
+Specifies how many notes will be converted and generated. The default value is 0, that means no limits, all notes will be converted.  
 
 **--octave-change**  
 Change octave higher or lower. The value is an integer. Negative integer decreases the octave. Positive integer increases the octave.  

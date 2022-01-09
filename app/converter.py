@@ -9,32 +9,32 @@ class Converter(action.Action) :
 		parser.add_argument(
 			'--data',
 			type = str,
-			help = ''
+			help = "Specifies the data on the command line, for example, --data 3.14159265"
 		)
 		parser.add_argument(
 			'--data-file',
 			type = str,
-			help = ''
+			help = "Loads the data from the data file."
 		)
 		parser.add_argument(
 			'--note-count',
 			type = int,
-			help = ''
+			help = "Specifies how many notes will be converted and generated. The default value is 0, that means no limits, all notes will be converted."
 		)
 		parser.add_argument(
 			'--scale',
 			type = str,
-			help = ''
+			help = "Specify the scale used by the --converter. The default scale is 'cmaj'."
 		)
 		parser.add_argument(
 			'--octave-change',
 			type = int,
-			help = ''
+			help = "Change octave higher or lower. The value is an integer. Negative integer decreases the octave. Positive integer increases the octave. The default value is 0, which doesn't change the octave."
 		)
 		parser.add_argument(
 			'--volume',
 			type = int,
-			help = ''
+			help = "Specifies the volume in the output sound file. The default value is 80. The value is between 0 and 100. 100 is the highest volume, 0 is silent."
 		)
 
 	def __init__(self) :

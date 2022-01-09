@@ -7,7 +7,7 @@ class Outputer(action.Action) :
 		parser.add_argument(
 			'--tempo',
 			type = int,
-			help = ''
+			help = "Specifies the tempo in BPM for quarter note. The default value is 120."
 		)
 
 	def __init__(self) :

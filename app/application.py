@@ -1,5 +1,6 @@
 import app.converter as converter
 import app.outputer as outputer
+import converters.scales as scales
 import common.util as util
 
 import sys
@@ -41,7 +42,8 @@ class Application :
 
 	def _doRun(self) :
 		self._loadModules()
-		self._parseCommandLine(sys.argv[1:])
+		if not self._parseCommandLine(sys.argv[1:]) :
+			return
 		convertedResult = self._converter.convert()
 		self._outputer.output(convertedResult)
 
@@ -67,17 +69,23 @@ class Application :
 	def _parseCommandLine(self, commandLineArguments) :
 		parser = argparse.ArgumentParser(add_help = False)
 		parserWrapper = ArgParserWrapper(parser)
-		parser.add_argument('--help', action = 'store_true')
-		parser.add_argument('-h', action = 'store_true', dest = 'help')
+		parser.add_argument('--help', action = 'store_true', help = 'Show help message')
+		parser.add_argument('-h', action = 'store_true', dest = 'help', help = 'Show help message')
 		parserWrapper.add_argument('--converter', type = str, help = "Converter name", default = 'digit')
 		parserWrapper.add_argument('--outputer', type = str, help = "Outputer name", default = 'midi')
 		for convert in self._converterList :
 			convert.setupArgumentParser(parserWrapper)
 		for outputer in self._outputerList :
 			outputer.setupArgumentParser(parserWrapper)
+
 		options, _ = parser.parse_known_args(commandLineArguments)
 		options = vars(options)
 		#print(options)
+
+		if options['help'] :
+			self._showUsage(parser)
+			return False
+
 		convertName = options['converter']
 		if convertName not in self._converterMap :
 			raise Exception('Unknown converter %s' % (convertName))
@@ -86,10 +94,30 @@ class Application :
 		outputerName = options['outputer']
 		if outputerName not in self._outputerMap :
 			raise Exception('Unknown converter %s' % (outputerName))
+
 		self._outputer = self._outputerMap[outputerName]()
 		self._outputer.setName(outputerName)
 		self._converter.parsedArguments(options)
 		self._outputer.parsedArguments(options)
+
+		return True
+
+	def _showUsage(self, parser) :
+		parser.print_help()
+		print("")
+		print("Converters: %s" % (self._doGetActionNamesText(self._converterList)))
+		print("Outputers: %s" % (self._doGetActionNamesText(self._outputerList)))
+		print("Scales: %s" % (', '.join(sorted(scales.scaleNameMap.keys()))))
+
+	def _doGetActionNamesText(self, actionList) :
+		actionNames = []
+		for action in actionList :
+			nameList = action.getNameList()
+			if util.isString(nameList) :
+				nameList = [ nameList ]
+			actionNames += nameList
+		actionNames = sorted(actionNames)
+		return ', '.join(actionNames)
 
 class ArgParserWrapper :
 	def __init__(self, argParser) :

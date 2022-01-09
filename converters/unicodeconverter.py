@@ -8,7 +8,7 @@ class UnicodeConverter(converter.Converter) :
 			{
 				'name' : '--octave-range',
 				'type' : int,
-				'help' : ''
+				'help' : "Used by 'unicode' converter. Specifies the range of the octaves to convert to. The default value is 3, that means, the converted note pitches are within 3 octaves."
 			},
 		]
 	}
