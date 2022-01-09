@@ -36,6 +36,7 @@ def convertSingleLettersToScale(result, text, scale, config) :
 			if octaveChange != 0 :
 				noteGroup.increaseOctave(octaveChange)
 			#print(noteGroup.getNoteList()[0].getSpnName(), noteGroup.getNoteList()[0].getSemitones())
+			#print(char, noteutil.noteListToSpnNoteNames(noteGroup.getNoteList()))
 			result.addNoteGroup(noteGroup)
 		elif findLetterIndex(char, durationExtendLetters) >= 0 :
 			noteGroupList = result.getNoteGroupList()

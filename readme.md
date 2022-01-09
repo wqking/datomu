@@ -82,6 +82,16 @@ For example, '--octave-change -2' will decrease 2 octaves on each notes.
 **--octave-range**  
 Used by 'unicode' converter. Specifies the range of the octaves to convert to. The default value is 3, that means, the converted note pitches are within 3 octaves.
 
+### More explanation on coverter and scale
+
+A 'scale' is a sequence of notes or chords. For example, 'cmaj' scales contains 7 notes, C4, D4, E4, F4, A4, B4.  
+A converter maps the data to scales.  
+'digit' converter converts the digit 1-7 to C4-B4, 8 and 9 to C5 and D5. Each note has default duration of quarter note. The digit 0 doubles previous note's duration.  
+'letter' converter converts the letters a-z. The first 7 letters a-g are converted to C4-B4. The second 7 letters h-n are converted to one octave higher, C5-B5, the third 7 letters are converted to C6-B6, etc. The space and some symbols ' ,.!?;:' double previous note's duration.  
+'unicode' converter converts each unicode value to a note, and limits the pitch to certain octaves.  
+
+The converters and scales are not limited to the ones in current code. It's very easy to add new converters and scales. When you add new stuff, I suggest you to use simplest algorithm as much as possible. Too much artificial algorithm or human intervention will distort the raw data. We want to listen the music from the raw data. Nature is the most beautiful.  
+
 ### Example commands
 
 `python datomu.py --converter digit --scale jp-hira --outputer midi --data-file mydata.txt --output-file myoutput.mid --tempo 120 --instrument 41 --note-count 100`  

@@ -14,7 +14,7 @@ class LetterConverter(converter.Converter) :
 	def doConvert(self, result) :
 		converterutil.convertSingleLettersToScale(
 			result = result,
-			text = self.getData(),
+			text = self._normalizeText(self.getData()),
 			scale = self.getScale(),
 			config = {
 				'noteLetters' : 'abcdefghijklmnopqrstuvwxyz',
