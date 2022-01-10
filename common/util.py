@@ -17,16 +17,6 @@ def getDictValue(dict, key, default = None) :
 		return dict[key]
 	return default
 
-def trim(text) :
-	if text is None :
-		return text
-	return text.strip()
-
-def trimRight(text) :
-	if text is None :
-		return text
-	return text.rstrip()
-
 def isString(s) :
 	return isinstance(s, str)
 

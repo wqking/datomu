@@ -99,7 +99,7 @@ The converters and scales are not limited to the ones in current code. It's very
 ## Developer document
 
 Currently there is no document for developer. You are welcome to read the source code and contribute your code, especially new converters and new outputers.  
-Warning: the code style doesn't conform PEP8 or any Python style. If you want to contribute, please follow current code style.  
+Warning: the code style doesn't conform to PEP8 or any Python style. If you want to contribute, please follow current code style.  
 
 ## Motivations
 
