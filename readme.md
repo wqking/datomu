@@ -7,6 +7,9 @@ Currently Datomu can generate MIDI file. For example, the tool can convert 3.141
 
 This tool is written in Python 3
 
+The sample sound is at,  
+https://www.youtube.com/watch?v=kxwMWDBPQJw
+
 ## License
 
 Apache License, Version 2.0  
