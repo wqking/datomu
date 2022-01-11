@@ -38,7 +38,7 @@ class Application :
 			self._doRun()
 		except Exception as e:
 			print(str(e))
-			traceback.print_exc()
+			#traceback.print_exc()
 
 	def _doRun(self) :
 		self._loadModules()
@@ -77,6 +77,10 @@ class Application :
 			convert.setupArgumentParser(parserWrapper)
 		for outputer in self._outputerList :
 			outputer.setupArgumentParser(parserWrapper)
+
+		if len(commandLineArguments) == 0 :
+			self._showUsage(parser)
+			return False
 
 		options, _ = parser.parse_known_args(commandLineArguments)
 		options = vars(options)
