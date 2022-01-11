@@ -1,3 +1,7 @@
+# Sample data
+
+Here are some sample data that can be used by Datomu. Any data can be used, not limit to the data here.
+
 ## e-1000.txt
 First 1000 digits of e (Natural logarithmic base).  
 Source https://miniwebtool.com/first-n-digits-of-e/  
